@@ -4,13 +4,15 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+@EntityListeners(AuditingEntityListener.class) // 날짜 자동추가할려면 써야되는데 책에 없음 ㅅㅂ
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@ToString
+
 public class Article {
 
     @Id
