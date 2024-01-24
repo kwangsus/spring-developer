@@ -10,5 +10,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
     defer-datasource-initialization: true
+jwt:
+  issuer: mybrew70@gmail.com
+  secret-key: mybrew70
+
+
