@@ -15,4 +15,8 @@ jwt:
   issuer: mybrew70@gmail.com
   secret-key: mybrew70
 
-
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE

@@ -5,6 +5,7 @@ import me.ks.springdeveloper.domain.Article;
 import me.ks.springdeveloper.dto.ArticleListViewResponse;
 import me.ks.springdeveloper.dto.ArticleViewResponse;
 import me.ks.springdeveloper.service.BlogService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,8 @@ public class BlogViewController {
                 .toList();
 
         model.addAttribute("articles", articles);
+
+        System.out.println("**************************:" + SecurityContextHolder.getContext().getAuthentication().getName());
 
         return "articleList";
     }
