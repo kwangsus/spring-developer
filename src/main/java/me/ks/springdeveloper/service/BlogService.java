@@ -7,6 +7,7 @@ import me.ks.springdeveloper.domain.Article;
 import me.ks.springdeveloper.dto.AddArticleRequest;
 import me.ks.springdeveloper.dto.UpdateArticleRequest;
 import me.ks.springdeveloper.repository.BlogRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,8 +19,8 @@ public class BlogService {
     private final BlogRepository blogRepository;
 
     // DTO를 받아와서 return으로 형변환
-    public Article save(AddArticleRequest request) {
-        return blogRepository.save(request.toEntity());
+    public Article save(AddArticleRequest request, String userName) {
+        return blogRepository.save(request.toEntity(userName));
     }
 
     public List<Article> findAll() {
@@ -32,7 +33,10 @@ public class BlogService {
     }
 
     public void delete(long id) {
-        blogRepository.deleteById(id);
+        Article article = blogRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
+        authorizeArticleAuthor(article);
+        blogRepository.delete(article);
     }
 
     @Transactional
@@ -40,10 +44,18 @@ public class BlogService {
         Article article = blogRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
 
+        authorizeArticleAuthor(article);
         article.update(request.getTitle(), request.getContent());
 
 //        blogRepository.save(article); @Transactional이 있으면 따로 save할 필요 없음
         return article;
 
+    }
+
+    private static void authorizeArticleAuthor(Article article) {
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!article.getAuthor().equals(name)) {
+            throw new IllegalArgumentException("not authorized");
+        }
     }
 }

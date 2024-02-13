@@ -27,8 +27,6 @@ public class BlogViewController {
 
         model.addAttribute("articles", articles);
 
-        System.out.println("**************************:" + SecurityContextHolder.getContext().getAuthentication().getName());
-
         return "articleList";
     }
 

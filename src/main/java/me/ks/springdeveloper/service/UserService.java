@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.ks.springdeveloper.domain.User;
 import me.ks.springdeveloper.dto.AddUserRequest;
 import me.ks.springdeveloper.repository.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public Long save(AddUserRequest request){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
         return userRepository.save(User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))

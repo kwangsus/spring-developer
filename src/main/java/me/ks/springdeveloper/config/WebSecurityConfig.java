@@ -1,4 +1,5 @@
 package me.ks.springdeveloper.config;
+/*
 
 import lombok.RequiredArgsConstructor;
 import me.ks.springdeveloper.service.UserDetailService;
@@ -65,3 +66,4 @@ public class WebSecurityConfig {
 
 
 }
+*/

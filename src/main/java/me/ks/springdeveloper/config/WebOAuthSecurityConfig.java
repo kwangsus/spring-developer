@@ -6,7 +6,6 @@ import me.ks.springdeveloper.config.oauth.OAuth2AuthorizationRequestBasedOnCooki
 import me.ks.springdeveloper.config.oauth.OAuth2SuccessHandler;
 import me.ks.springdeveloper.config.oauth.OAuth2UserCustomService;
 import me.ks.springdeveloper.repository.RefreshTokenRepository;
-import me.ks.springdeveloper.service.RefreshTokenService;
 import me.ks.springdeveloper.service.UserService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
