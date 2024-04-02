@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    /*private final PasswordEncoder passwordEncoder;*/
 
     public Long save(AddUserRequest request){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         return userRepository.save(User.builder()
                 .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
+                .password(encoder.encode(request.getPassword()))
                 .build()).getId();
     }
 

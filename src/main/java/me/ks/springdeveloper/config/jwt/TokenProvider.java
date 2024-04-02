@@ -19,13 +19,13 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Service
 public class TokenProvider {
+
     private final JwtProperties jwtProperties;
 
     public String generateToken(User user, Duration expiredAt) {
         Date now = new Date();
         return makeToken(new Date(now.getTime() + expiredAt.toMillis()), user);
     }
-
     // jwt 토큰 만들기
     private String makeToken(Date expiry, User user) {
         Date now = new Date();
@@ -40,7 +40,6 @@ public class TokenProvider {
                 .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
                 .compact();
     }
-
     // jwt 토큰 검증
     public boolean validToken(String token) {
         try {
@@ -59,11 +58,7 @@ public class TokenProvider {
         Set<SimpleGrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
         return new UsernamePasswordAuthenticationToken(
                 new org.springframework.security.core.userdetails.User(
-                        claims.getSubject()
-                        , ""
-                        , authorities)
-                , token
-                , authorities);
+                        claims.getSubject(), "", authorities), token, authorities);
     }
 
     public Long getUserId(String token) {

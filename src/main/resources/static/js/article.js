@@ -123,12 +123,15 @@ function httpRequest(method, url, body, success, fail) {
             "Content-Type": "application/json",
         },
         body: body,
-    }).then((response) => {
+
+    }).then(response => {
+        alert(response.status); //---------------
         if (response.status === 200 || response.status === 201) {
             return success();
         }
         const refresh_token = getCookie("refresh_token");
-        if(response.status === 401 || refresh_token) {
+        if(response.status === 401 && refresh_token) {
+            alert(response.status); //---------------
             fetch("/api/token", {
                 method: "POST",
                 headers: {
@@ -139,18 +142,18 @@ function httpRequest(method, url, body, success, fail) {
                     refreshToken: getCookie("refresh_token"),
                 }),
             })
-                .then((res) => {
+                .then(res => {
                     if (res.ok) {
                         return res.json();
                     }
                 })
-                .then((result) => {
+                .then(result => {
                     localStorage.setItem("access_token", result.accessToken);
                     httpRequest(method, url, body, success, fail);
                 })
-                .catch((error) => fail());
+                .catch(error => fail());
         } else {
             return fail();
         }
-    })
+    });
 }

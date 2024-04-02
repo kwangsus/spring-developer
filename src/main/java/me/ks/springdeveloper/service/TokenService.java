@@ -15,10 +15,10 @@ public class TokenService {
     private final UserService userService;
 
     public String createAccessToken(String refreshToken) {
-        if (!tokenProvider.validToken(refreshToken)) {
-            throw new IllegalArgumentException("Unexpected token");
-        }
 
+            if (!tokenProvider.validToken(refreshToken)) {
+                throw new IllegalArgumentException("Unexpected token");
+            }
         Long userId = refreshTokenService.findByRefreshToken(refreshToken).getUserId();
         User user = userService.findById(userId);
 

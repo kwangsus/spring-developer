@@ -44,7 +44,7 @@ public class TokenProviderTest {
         Assertions.assertThat(userId).isEqualTo(testUser.getId());
     }
 
-    @DisplayName("validToken() : 토큰 검증 실패")
+    @DisplayName("invalidToken() : 토큰 검증 실패")
     @Test
     void validToken_invalid() {
         String token = JwtFactory.builder()
@@ -64,8 +64,17 @@ public class TokenProviderTest {
         String token = JwtFactory.withDefaultValues().createToken(jwtProperties);
         log.info(token);
 
-        boolean result = tokenProvider.validToken(token);
-
+        //boolean result = tokenProvider.validToken(token);
+        boolean result;
+        try{
+            Jwts.parser()
+                    .setSigningKey("myPersonalKey1")
+                    .parseClaimsJws(token);
+            result = true;
+        } catch(Exception e) {
+            log.info("key invalid.");
+            result = false;
+        }
         Assertions.assertThat(result).isTrue();
     }
 

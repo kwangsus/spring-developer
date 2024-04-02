@@ -1,6 +1,7 @@
 package me.ks.springdeveloper.config;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import me.ks.springdeveloper.config.jwt.TokenProvider;
 import me.ks.springdeveloper.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import me.ks.springdeveloper.config.oauth.OAuth2SuccessHandler;
@@ -24,6 +25,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @RequiredArgsConstructor
 @Configuration
+@Log4j2
 public class WebOAuthSecurityConfig {
     private final OAuth2UserCustomService oAuth2UserCustomService;
     private final TokenProvider tokenProvider;
@@ -61,8 +63,8 @@ public class WebOAuthSecurityConfig {
                 .authorizationEndpoint(endpoint -> endpoint
                     .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository()))
                 .successHandler(oAuth2SuccessHandler())
-                .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
-                    .userService(oAuth2UserCustomService)));
+                .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig // OAuth2 login 성공시 사용자 정보 가져올 설정
+                    .userService(oAuth2UserCustomService))); // OAuth2 login 성공시 작업
 
         http
             .logout(logout -> logout
@@ -82,7 +84,7 @@ public class WebOAuthSecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

@@ -8,14 +8,14 @@ import org.springframework.util.SerializationUtils;
 import java.util.Base64;
 
 public class CookieUtil {
-    public static void addCookie(HttpServletResponse response, String name, String value, int maxAge) {
+    public static void addCookie(HttpServletResponse response, String name, String value, int maxAge) {// response에 cookie 응답시킴
         Cookie cookie = new Cookie(name, value);
         cookie.setPath("/");
         cookie.setMaxAge(maxAge);
         response.addCookie(cookie);
     }
 
-    public static void deleteCookie(HttpServletRequest request, HttpServletResponse response, String name) {
+    public static void deleteCookie(HttpServletRequest request, HttpServletResponse response, String name) { // delete 시킬 cookie request로 받아와서 responese로 응답시킴
         Cookie[] cookies = request.getCookies();
         if (cookies == null) {
             return;

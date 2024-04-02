@@ -39,6 +39,8 @@ public class JwtFactory {
                 .setSubject(subject)
                 .addClaims(claims)
                 .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
+                //.signWith(SignatureAlgorithm.HS256, "mybrew70")
+
                 .compact();
     }
 }
