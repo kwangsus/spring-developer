@@ -1,6 +1,7 @@
 package me.ks.springdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import me.ks.springdeveloper.domain.Article;
 import me.ks.springdeveloper.dto.AddArticleRequest;
 import me.ks.springdeveloper.dto.ArticleResponse;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
+@Log4j2
 @RequiredArgsConstructor
 @RestController
 public class BlogApiController {
@@ -43,6 +45,7 @@ public class BlogApiController {
 
     @DeleteMapping("/api/articles/{id}")
     public ResponseEntity<Void> deleteArticle(@PathVariable("id") long id) {
+        log.info(id);
         blogService.delete(id);
 
         return new ResponseEntity<>(HttpStatus.OK);

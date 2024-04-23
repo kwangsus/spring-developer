@@ -14,7 +14,7 @@ if (deleteButton) {
             location.replace("/articles");
         }
 
-        httpRequest("DELETE", "/api/articles" + id, null, success, fail);
+        httpRequest("DELETE", "/api/articles/" + id, null, success, fail);
 
         /*fetch(`/api/articles/${id}`, {
             method: 'delete'
@@ -46,6 +46,8 @@ if (modifyButton) {
             alert("수정 실해");
             location.replace("/articles");
         }
+
+        httpRequest("PUT", `/api/articles/${id}`, body, success, fail);
 
         /*fetch(`/api/articles/${id}`, {
             method: 'put',
@@ -125,13 +127,11 @@ function httpRequest(method, url, body, success, fail) {
         body: body,
 
     }).then(response => {
-        alert(response.status); //---------------
         if (response.status === 200 || response.status === 201) {
             return success();
         }
         const refresh_token = getCookie("refresh_token");
-        if(response.status === 401 && refresh_token) {
-            alert(response.status); //---------------
+        if(response.status === 401 && refresh_token) { //권한 거부 and db에 리프레시토큰이 있으면
             fetch("/api/token", {
                 method: "POST",
                 headers: {

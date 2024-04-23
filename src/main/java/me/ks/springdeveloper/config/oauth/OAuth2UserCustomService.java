@@ -32,6 +32,7 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
                 .map(e -> e.update(name))
                 .orElse(User.builder()
                         .email(email)
+                        .password("*PROTECTED*")
                         .nickname(name)
                         .build());
 

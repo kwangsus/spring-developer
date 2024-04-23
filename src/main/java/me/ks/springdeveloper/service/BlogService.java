@@ -54,6 +54,9 @@ public class BlogService {
 
     private static void authorizeArticleAuthor(Article article) {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        log.info("authentication: {}", SecurityContextHolder.getContext().getAuthentication());
+        log.info("name: {}", name);
+
         if (!article.getAuthor().equals(name)) {
             throw new IllegalArgumentException("not authorized");
         }
